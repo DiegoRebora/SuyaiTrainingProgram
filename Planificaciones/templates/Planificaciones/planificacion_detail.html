@@ -1,0 +1,29 @@
+{% extends "Planificaciones/base.html" %}
+
+{% block contenido %}
+
+<p>
+  <strong>Semana</strong> {{object.semana}}
+</p>
+<p>
+  <strong>:</strong> {{object.descripcion}}
+</p>
+<p>
+  <strong>Coach</strong> {{object.coach}}
+</p>
+<p>
+    {% if object.planificacion %}
+    <img src="{{ object.planificacion.url }}" alt="Imagen de planificación" style="display: block; margin: 0 auto;">
+    {% endif %}
+  
+</p>
+<p>
+    <strong>Comentario</strong> {{object.comentario}}
+  </p>
+
+<br>
+<br>
+<br>
+<a href="{% url 'listar_planis' %}">Volver lista</a>
+
+{% endblock contenido %}
