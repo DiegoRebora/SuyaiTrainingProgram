@@ -1,0 +1,21 @@
+{% extends "Planificaciones/base.html" %}
+
+{% block contenido %}
+
+<p>
+  <strong>Nombre</strong> {{atleta.user.nombre}}
+</p>
+<p>
+  <strong>Apellido</strong> {{atleta.user.apellido}}
+</p>
+<p>
+  <strong>Apodo</strong> {{atleta.apodo}}
+</p>
+<p>
+<p>
+  <strong>Categoría</strong> {{atleta.categoria}}
+</p>
+
+<a href="{% url 'listar_atletas' %}">Volver lista</a>
+
+{% endblock contenido %}

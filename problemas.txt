@@ -1,0 +1,11 @@
+NO GUARDA LAS IMAGENES, POR ENDE LAS Planificaciones
+NO GUARDA LOS DATOS DEL ATLETA, MÁS ALLA DEL NOMBRE Y APELLIDO, NO GUARDA TODO EL RESTO. 
+
+
+    RM_backsquat = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    RM_deadlift = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    RM_bench = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    RM_snatch = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    RM_clean = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    RM_jerk = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    RM_cleanandjerk = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)

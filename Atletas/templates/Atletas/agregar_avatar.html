@@ -1,0 +1,11 @@
+{% extends "Planificaciones/base.html" %}
+
+
+{% block contenido %}
+<h3>Subir tu Avatar</h3>
+<form method="post" action="{% url 'agregar_avatar' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+</form>
+{% endblock contenido %}

@@ -52,49 +52,20 @@ class UserUpdateForm(forms.ModelForm):
 
         return user
 
-
 class AtletaForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'email']
+        model = Atleta
+        fields = ['categoria', 'apodo']
 
-    fecha_nacimiento = forms.DateField()
-    categoria = forms.CharField(max_length=20)
-    apodo = forms.CharField(max_length=20, required=False)
-    Fran = forms.DurationField(required=False)
-    Grace = forms.DurationField(required=False)
-    Isabel = forms.DurationField(required=False)
-    Murph = forms.DurationField(required=False)
-    RM_backsquat = forms.IntegerField(required=False)
-    RM_deadlift = forms.IntegerField(required=False)
-    RM_bench = forms.IntegerField(required=False)
-    RM_snatch = forms.IntegerField(required=False)
-    RM_clean = forms.IntegerField(required=False)
-    RM_jerk = forms.IntegerField(required=False)
-    RM_cleanandjerk = forms.IntegerField(required=False)
 
 class AtletaUpdateForm(forms.ModelForm):
-    fecha_nacimiento = forms.DateField()
     categoria = forms.CharField(max_length=20)
     apodo = forms.CharField(max_length=20, required=False)
-    Fran = forms.DurationField(required=False)
-    Grace = forms.DurationField(required=False)
-    Isabel = forms.DurationField(required=False)
-    Murph = forms.DurationField(required=False)
-    RM_backsquat = forms.IntegerField(required=False)
-    RM_deadlift = forms.IntegerField(required=False)
-    RM_bench = forms.IntegerField(required=False)
-    RM_snatch = forms.IntegerField(required=False)
-    RM_clean = forms.IntegerField(required=False)
-    RM_jerk = forms.IntegerField(required=False)
-    RM_cleanandjerk = forms.IntegerField(required=False)
 
     class Meta:
         model = Atleta
-        fields = ['fecha_nacimiento', 'categoria', 'apodo',
-                  'Fran', 'Grace', 'Isabel', 'Murph',
-                  'RM_backsquat', 'RM_deadlift', 'RM_bench',
-                  'RM_snatch', 'RM_clean', 'RM_jerk', 'RM_cleanandjerk']
+        fields = ['categoria', 'apodo'
+        ]
 
     def clean(self):
         cleaned_data = super().clean()

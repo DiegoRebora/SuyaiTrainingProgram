@@ -1,0 +1,12 @@
+{% extends "Planificaciones/base.html" %}
+
+{% block contenido %}
+<p>Atleta: <b>{{ atleta.user.username }}</b></p>
+
+<h3>Editar Atleta</h3>
+<form method="post">
+ {% csrf_token %}
+ {{ form.as_p }}
+ <input type="submit" value="Salvar"/>
+</form>
+{% endblock contenido %}

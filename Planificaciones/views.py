@@ -20,14 +20,14 @@ class PlanificacionListView(LoginRequiredMixin, ListView):
     model = Planificacion
     template_name = 'Planificaciones/planificacion.html'
     context_object_name = 'planis'
-    #login_url = 'login'
+    login_url = 'login'
 
 class PlanificacionCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Planificacion
     template_name = 'Planificaciones/planificacion_form.html'
     fields = ['semana', 'descripcion', 'fecha_inicio', 'coach', 'planificacion', 'comentario']
     success_url = reverse_lazy('listar_planis')
-    #login_url = 'login'
+    login_url = 'login'
     permission_required = 'Planificaciones.add_planificacion'
 
     def form_valid(self, form):
@@ -50,10 +50,10 @@ class PlanificacionDeleteView(LoginRequiredMixin, PermissionRequiredMixin, Delet
     model = Planificacion
     template_name = 'Planificaciones/planificacion_confirm_delete.html'
     success_url = reverse_lazy('listar_planis')
-    #login_url = 'login'
+    login_url = 'login'
     permission_required = 'Planificaciones.delete_planificacion'
 
 class PlanificacionDetailView(LoginRequiredMixin, DetailView):
     model = Planificacion
     success_url = reverse_lazy('listar_planis')
-    #login_url = 'login'
+    login_url = 'login'

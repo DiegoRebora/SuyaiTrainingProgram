@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, CreateView, DetailView, ListView, DeleteView
 
 from Atletas.forms import UserRegisterForm, UserUpdateForm,  AtletaForm, AtletaUpdateForm, AvatarFormulario
 from django.contrib.auth.models import User
@@ -24,7 +24,7 @@ def registro(request):
        formulario = UserRegisterForm()
    return render(
        request=request,
-       template_name='Atletas/registro.html', ##CREAR HTML
+       template_name='Atletas/registro.html', 
        context={'form': formulario},
    )
 
@@ -54,20 +54,78 @@ def login_view(request):
    )
 
 class CustomLogoutView(LogoutView):
-   template_name = 'Atletas/logout.html' ##CREAR HTML
+   template_name = 'Atletas/logout.html' 
 
 class MiPerfilUpdateView(LoginRequiredMixin, UpdateView):
+   model = User
    form_class = UserUpdateForm
    success_url = reverse_lazy('inicio')
-   template_name = 'Atletas/formulario_perfil.html'  ##CREAR HTML
+   template_name = 'Atletas/formulario_perfil.html'
+   def get_object(self):
+        return self.request.user  ##CREAR HTML
 
+class AtletaCreateView(LoginRequiredMixin, CreateView):
+    model = Atleta
+    template_name = "Atletas/formulario_atleta.html"
+    fields = ["categoria", "apodo"]
+    success_url = reverse_lazy("inicio")
+
+    def dispatch(self, request, *args, **kwargs):
+        # Verificar si el usuario ya tiene un objeto Atleta
+        atleta_existente = Atleta.objects.filter(user=request.user).first()
+        if atleta_existente:
+            # Si ya existe, redirigir a la vista de edición y pasar el objeto al contexto
+            return redirect('editar_atleta', pk=atleta_existente.pk)
+        else:
+            # Si no existe, continuar con la creación normalmente
+            return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Agregar el objeto Atleta existente al contexto
+        atleta_existente = Atleta.objects.filter(user=self.request.user).first()
+        if atleta_existente:
+            context['atleta_existente'] = atleta_existente
+        return context
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
 class AtletaUpdateView(LoginRequiredMixin, UpdateView):
-   form_class = AtletaUpdateForm
-   success_url = reverse_lazy('inicio')
-   template_name = 'Atletas/formulario_atleta.html'  ##CREAR HTML
+    model = Atleta
+    form_class = AtletaUpdateForm
+    success_url = reverse_lazy('inicio')
+    template_name = 'Atletas/formulario_atleta.html'
 
-   def get_object(self, queryset=None):
-       return self.request.user
+    def get_object(self, queryset=None):
+        # Obtener el objeto Atleta asociado al usuario actual
+        return self.request.user.atleta
+
+    def form_valid(self, form):
+        # Asignar el usuario actual al objeto Atleta antes de guardarlo
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class AtletaListView(ListView):
+    model = Atleta
+    template_name = 'Atletas/atletas.html'
+
+
+class AtletaSearchView(LoginRequiredMixin, ListView):
+    model = Atleta
+    template_name = 'Atletas/atletas.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Atleta.objects.filter(user__first_name__icontains=query)
+        return object_list
+
+class AtletaDetailView(LoginRequiredMixin, DetailView):
+    model = Atleta
+    template_name = "Atletas/atleta_detail.html"
+
+
 
 def agregar_avatar(request):
     if request.method == 'POST':
