@@ -31,12 +31,12 @@
             </td>
             <td>
               {% if perms.planificacion.change_planificacion %}
-                <a href={% url "editar_plani" plani.id %}> Editar Plani </a>
+                <a href={% url "editar_plani" planificacion.id %}> Editar Plani </a>
               {% endif %}
             </td>
             <td>
               {% if perms.planificacion.delete_planificacion %}
-                <a href = "{% url "borrar_plani" plani.id %}">
+                <a href = "{% url "borrar_plani" planificacion.id %}">
                   <i class="bi bi-trash"></i>
               {% endif %}
             </td>

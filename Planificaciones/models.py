@@ -11,13 +11,9 @@ class Planificacion(models.Model):
     descripcion = models.CharField(max_length=255)
     fecha_inicio = models.DateField()
     coach = models.CharField(max_length=255)
-    planificacion = models.ImageField(upload_to='planificaciones', null=True, blank=True)
     comentario = models.TextField(blank=True)
     
 
     def __str__(self):
         return f"Semana {self.semana}: {self.descripcion}"
-    
-    class Meta:
-        app_label = 'Planificaciones'
 

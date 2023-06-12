@@ -11,5 +11,5 @@ urlpatterns = [
     path("ver-planis/<int:pk>/", PlanificacionDetailView.as_view(), name="ver_plani" ),
     path("editar-plani/<int:pk>/", PlanificacionUpdateView.as_view(), name="editar_plani" ),
     path("borrar-plani/<int:pk>/", PlanificacionDeleteView.as_view(), name="borrar_plani" ),
-    #path("buscar-circuitos/", SearchCircuito.as_view(), name="buscar_circuito" ),
+    
 ]
