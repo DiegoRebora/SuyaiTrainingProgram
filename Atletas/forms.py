@@ -52,10 +52,70 @@ class UserUpdateForm(forms.ModelForm):
 
         return user
 
-class AtletaForm(forms.ModelForm):
+"""class AtletaForm(forms.ModelForm):
     class Meta:
         model = Atleta
-        fields = ['categoria', 'apodo']
+        fields = ['categoria', 'apodo']"""
+
+
+"""class AtletaForm(forms.ModelForm):
+    grace = forms.CharField(required=False)
+    fran = forms.CharField(required=False)
+    murph = forms.CharField(required=False)
+
+    class Meta:
+        model = Atleta
+        fields = ['categoria', 'apodo', 'grace', 'fran', 'murph', 'backsquat_rm', 'clean_rm', 'jerk_rm', 'snatch_rm', 'deadlift_rm']
+
+    def save(self, commit=True, user=None):
+        atleta = super().save(commit=False)
+        if user:
+            atleta.user = user
+        if commit:
+            atleta.save()
+        return atleta
+"""
+class AtletaForm(forms.ModelForm):
+    grace = forms.CharField(required=False)
+    fran = forms.CharField(required=False)
+    murph = forms.CharField(required=False)
+
+    class Meta:
+        model = Atleta
+        fields = ['categoria', 'apodo', 'grace', 'fran', 'murph', 'backsquat_rm', 'clean_rm', 'jerk_rm', 'snatch_rm', 'deadlift_rm']
+        widgets = {
+            'categoria': forms.TextInput(attrs={'class': 'form-control'}),
+            'apodo': forms.TextInput(attrs={'class': 'form-control'}),
+            'grace': forms.TextInput(attrs={'class': 'form-control'}),
+            'fran': forms.TextInput(attrs={'class': 'form-control'}),
+            'murph': forms.TextInput(attrs={'class': 'form-control'}),
+            'backsquat_rm': forms.NumberInput(attrs={'class': 'form-control'}),
+            'clean_rm': forms.NumberInput(attrs={'class': 'form-control'}),
+            'jerk_rm': forms.NumberInput(attrs={'class': 'form-control'}),
+            'snatch_rm': forms.NumberInput(attrs={'class': 'form-control'}),
+            'deadlift_rm': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+
+    def save(self, commit=True, user=None):
+        atleta = super().save(commit=False)
+        if user:
+            atleta.user = user
+        if commit:
+            atleta.save()
+        return atleta
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['categoria'].widget.attrs.update({'class': 'form-control'})
+        self.fields['apodo'].widget.attrs.update({'class': 'form-control'})
+        self.fields['grace'].widget.attrs.update({'class': 'form-control'})
+        self.fields['fran'].widget.attrs.update({'class': 'form-control'})
+        self.fields['murph'].widget.attrs.update({'class': 'form-control'})
+        self.fields['backsquat_rm'].widget.attrs.update({'class': 'form-control'})
+        self.fields['clean_rm'].widget.attrs.update({'class': 'form-control'})
+        self.fields['jerk_rm'].widget.attrs.update({'class': 'form-control'})
+        self.fields['snatch_rm'].widget.attrs.update({'class': 'form-control'})
+        self.fields['deadlift_rm'].widget.attrs.update({'class': 'form-control'})
 
 
 class AtletaUpdateForm(forms.ModelForm):

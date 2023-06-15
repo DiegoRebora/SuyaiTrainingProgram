@@ -1,21 +1,24 @@
 {% extends "Planificaciones/base.html" %}
 
 {% block contenido %}
-
-<p>
-  <strong>Nombre</strong> {{atleta.user.nombre}}
-</p>
-<p>
-  <strong>Apellido</strong> {{atleta.user.apellido}}
-</p>
-<p>
-  <strong>Apodo</strong> {{atleta.apodo}}
-</p>
-<p>
-<p>
-  <strong>Categoría</strong> {{atleta.categoria}}
-</p>
-
-<a href="{% url 'listar_atletas' %}">Volver lista</a>
+<div class="perfil-atleta">
+  <h2>Perfil de Atleta</h2>
+  <ul>
+    <li><strong>Nombre:</strong> {{ atleta.user.first_name }}</li>
+    <li><strong>Apellido:</strong> {{ atleta.user.last_name }}</li>
+    <li><strong>Apodo:</strong> {{ atleta.apodo }}</li>
+    <li><strong>Categoría:</strong> {{ atleta.categoria }}</li>
+    <li><strong>Grace:</strong> {{ atleta.grace }}</li>
+    <li><strong>Fran:</strong> {{ atleta.fran }}</li>
+    <li><strong>Murph:</strong> {{ atleta.murph }}</li>
+    <li><strong>Backsquat RM:</strong> {{ atleta.backsquat_rm }}</li>
+    <li><strong>Clean RM:</strong> {{ atleta.clean_rm }}</li>
+    <li><strong>Jerk RM:</strong> {{ atleta.jerk_rm }}</li>
+    <li><strong>Snatch RM:</strong> {{ atleta.snatch_rm }}</li>
+    <li><strong>Deadlift RM:</strong> {{ atleta.deadlift_rm }}</li>
+  </ul>
+  <img src="{{ atleta.user.avatar.imagen.url }}" style="width: 250px; height: 250px; border-radius: 50%; position: absolute; top: 150px; right: 750px;">
+  <a href="{% url 'listar_atletas' %}" class="btn btn-primary">Volver</a>
+</div>
 
 {% endblock contenido %}

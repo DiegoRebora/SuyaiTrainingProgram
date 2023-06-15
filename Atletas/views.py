@@ -64,7 +64,7 @@ class MiPerfilUpdateView(LoginRequiredMixin, UpdateView):
    def get_object(self):
         return self.request.user  ##CREAR HTML
 
-class AtletaCreateView(LoginRequiredMixin, CreateView):
+"""class AtletaCreateView(LoginRequiredMixin, CreateView):
     model = Atleta
     template_name = "Atletas/formulario_atleta.html"
     fields = ["categoria", "apodo"]
@@ -105,7 +105,44 @@ class AtletaUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         # Asignar el usuario actual al objeto Atleta antes de guardarlo
         form.instance.user = self.request.user
+        return super().form_valid(form)"""
+
+class AtletaCreateView(LoginRequiredMixin, CreateView):
+    model = Atleta
+    form_class = AtletaForm
+    template_name = "Atletas/formulario_atleta.html"
+    success_url = reverse_lazy("inicio")
+
+    def get_object(self, queryset=None):
+        # Obtener el objeto Atleta existente del usuario actual o crear uno nuevo
+        obj, created = self.model.objects.get_or_create(user=self.request.user)
+        return obj
+
+    def form_valid(self, form):
+        # Asignar el usuario actual al objeto Atleta
+        form.instance.user = self.request.user
         return super().form_valid(form)
+
+    def dispatch(self, request, *args, **kwargs):
+        # Verificar si se está creando un nuevo objeto Atleta o editando uno existente
+        if self.kwargs.get('pk'):
+            # Si se está editando, continuar con el flujo normalmente
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            # Si se está creando un nuevo objeto, redirigir a la vista de edición con el objeto existente
+            atleta_existente = self.get_object()
+            return redirect('editar_atleta', pk=atleta_existente.pk)
+
+class AtletaUpdateView(LoginRequiredMixin, UpdateView):
+    model = Atleta
+    form_class = AtletaForm
+    template_name = "Atletas/formulario_atleta.html"
+    success_url = reverse_lazy("inicio")
+
+    def get_object(self):
+        # Obtener el objeto Atleta del usuario actual
+        obj = Atleta.objects.get(user=self.request.user)
+        return obj
 
 class AtletaListView(ListView):
     model = Atleta
