@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 
@@ -38,3 +39,13 @@ class Atleta(models.Model):
 
     def __str__(self):
         return self.apodo
+
+class Score(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    score1 = models.CharField(max_length=20, null=True, blank=True)
+    score2 = models.CharField(max_length=20, null=True, blank=True)
+    score3 = models.CharField(max_length=20, null=True, blank=True)
+    comment = models.TextField(blank=True, null=True)
+    date = models.DateTimeField(default=timezone.now)
+    def __str__(self):
+        return self.user.first_name

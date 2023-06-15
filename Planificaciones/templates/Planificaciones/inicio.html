@@ -4,8 +4,8 @@
   <div>
    
     {% if user.is_authenticated %}
-      <h1 style="text-transform: uppercase;">BIENVENID@,   <span style="color: red">{{user.first_name}}</span></h1> 
-      <img src="{{ user.avatar.imagen.url }}" style="width: 150px; height: 150px; border-radius: 50%; position: absolute; top: 270px; right: 550px;">
+      <h1 style="text-transform: uppercase;">BIENVENID@   <span style="color: white">{{user.first_name}}</span></h1> 
+      <img src="{{ user.avatar.imagen.url }}" style="width: 150px; height: 150px; border-radius: 50%; position: absolute; top: 290px; right: 850px;">
     {% endif %}
   </div>
 </section>

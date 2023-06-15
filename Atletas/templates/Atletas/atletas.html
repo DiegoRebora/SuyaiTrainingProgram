@@ -20,6 +20,7 @@
           </tr>
           {% for atleta in object_list %}
           <tr>
+            <td><img src="{{ atleta.user.avatar.imagen.url }}"  style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;"></td>
             <td style="color:white">{{ atleta.user.first_name }}</td>
             <td style="color:white">{{ atleta.user.last_name }}</td>
             <td style="color:white">{{ atleta.apodo }}</td>

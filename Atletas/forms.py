@@ -3,7 +3,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from Atletas.models import Avatar
-from Atletas.models import Atleta
+from Atletas.models import Atleta, Score
+from datetime import datetime
 
 class UserRegisterForm(UserCreationForm):
    
@@ -52,29 +53,7 @@ class UserUpdateForm(forms.ModelForm):
 
         return user
 
-"""class AtletaForm(forms.ModelForm):
-    class Meta:
-        model = Atleta
-        fields = ['categoria', 'apodo']"""
 
-
-"""class AtletaForm(forms.ModelForm):
-    grace = forms.CharField(required=False)
-    fran = forms.CharField(required=False)
-    murph = forms.CharField(required=False)
-
-    class Meta:
-        model = Atleta
-        fields = ['categoria', 'apodo', 'grace', 'fran', 'murph', 'backsquat_rm', 'clean_rm', 'jerk_rm', 'snatch_rm', 'deadlift_rm']
-
-    def save(self, commit=True, user=None):
-        atleta = super().save(commit=False)
-        if user:
-            atleta.user = user
-        if commit:
-            atleta.save()
-        return atleta
-"""
 class AtletaForm(forms.ModelForm):
     grace = forms.CharField(required=False)
     fran = forms.CharField(required=False)
@@ -152,3 +131,38 @@ class AvatarFormulario(forms.ModelForm):
    class Meta:
        model = Avatar
        fields = ['imagen']
+
+
+
+class ScoreForm(forms.ModelForm):
+    class Meta:
+        model = Score
+        fields = ['score1', 'score2', 'score3', 'comment', 'date']
+        widgets = {
+            'date': forms.DateTimeInput(attrs={'readonly': False}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(ScoreForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        score1 = cleaned_data.get('score1')
+        score2 = cleaned_data.get('score2')
+        score3 = cleaned_data.get('score3')
+
+        if not score1 and not score2 and not score3:
+            raise forms.ValidationError('Debe ingresar al menos un puntaje.')
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        instance = super(ScoreForm, self).save(commit=False)
+        instance.user = self.user
+        instance.date = datetime.now()
+
+        if commit:
+            instance.save()
+
+        return instance

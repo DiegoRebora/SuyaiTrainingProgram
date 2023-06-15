@@ -14,4 +14,6 @@ urlpatterns = [
     path("ver_atleta/<int:pk>/", AtletaDetailView.as_view(), name="ver_atleta"),
     path("listar_atletas/", AtletaListView.as_view(), name="listar_atletas"),
     path("buscar_atleta/", AtletaSearchView. as_view(), name="buscar_atleta"),
+    path("crear_score/", ScoreCreateView.as_view(), name="crear_score"),
+    
 ]

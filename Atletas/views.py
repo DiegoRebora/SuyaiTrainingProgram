@@ -1,16 +1,17 @@
 from django.shortcuts import render
+from datetime import datetime
 
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import UpdateView, CreateView, DetailView, ListView, DeleteView
 
-from Atletas.forms import UserRegisterForm, UserUpdateForm,  AtletaForm, AtletaUpdateForm, AvatarFormulario
+from Atletas.forms import UserRegisterForm, UserUpdateForm,  AtletaForm, AtletaUpdateForm, AvatarFormulario, ScoreForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import login, authenticate
-from Atletas.models import Avatar, Atleta
+from Atletas.models import Avatar, Atleta, Score
 # Create your views here.
 def registro(request):
    if request.method == "POST":
@@ -18,7 +19,7 @@ def registro(request):
 
        if formulario.is_valid():
            formulario.save()  
-           url_exitosa = reverse('inicio')
+           url_exitosa = reverse('login')
            return redirect(url_exitosa)
    else:  # GET
        formulario = UserRegisterForm()
@@ -59,59 +60,17 @@ class CustomLogoutView(LogoutView):
 class MiPerfilUpdateView(LoginRequiredMixin, UpdateView):
    model = User
    form_class = UserUpdateForm
-   success_url = reverse_lazy('inicio')
+   success_url = reverse_lazy('listar_atletas')
    template_name = 'Atletas/formulario_perfil.html'
    def get_object(self):
         return self.request.user  ##CREAR HTML
 
-"""class AtletaCreateView(LoginRequiredMixin, CreateView):
-    model = Atleta
-    template_name = "Atletas/formulario_atleta.html"
-    fields = ["categoria", "apodo"]
-    success_url = reverse_lazy("inicio")
-
-    def dispatch(self, request, *args, **kwargs):
-        # Verificar si el usuario ya tiene un objeto Atleta
-        atleta_existente = Atleta.objects.filter(user=request.user).first()
-        if atleta_existente:
-            # Si ya existe, redirigir a la vista de edición y pasar el objeto al contexto
-            return redirect('editar_atleta', pk=atleta_existente.pk)
-        else:
-            # Si no existe, continuar con la creación normalmente
-            return super().dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Agregar el objeto Atleta existente al contexto
-        atleta_existente = Atleta.objects.filter(user=self.request.user).first()
-        if atleta_existente:
-            context['atleta_existente'] = atleta_existente
-        return context
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
-    
-class AtletaUpdateView(LoginRequiredMixin, UpdateView):
-    model = Atleta
-    form_class = AtletaUpdateForm
-    success_url = reverse_lazy('inicio')
-    template_name = 'Atletas/formulario_atleta.html'
-
-    def get_object(self, queryset=None):
-        # Obtener el objeto Atleta asociado al usuario actual
-        return self.request.user.atleta
-
-    def form_valid(self, form):
-        # Asignar el usuario actual al objeto Atleta antes de guardarlo
-        form.instance.user = self.request.user
-        return super().form_valid(form)"""
 
 class AtletaCreateView(LoginRequiredMixin, CreateView):
     model = Atleta
     form_class = AtletaForm
     template_name = "Atletas/formulario_atleta.html"
-    success_url = reverse_lazy("inicio")
+    success_url = reverse_lazy("listar_atletas")
 
     def get_object(self, queryset=None):
         # Obtener el objeto Atleta existente del usuario actual o crear uno nuevo
@@ -137,7 +96,7 @@ class AtletaUpdateView(LoginRequiredMixin, UpdateView):
     model = Atleta
     form_class = AtletaForm
     template_name = "Atletas/formulario_atleta.html"
-    success_url = reverse_lazy("inicio")
+    success_url = reverse_lazy("listar_atletas")
 
     def get_object(self):
         # Obtener el objeto Atleta del usuario actual
@@ -181,3 +140,24 @@ def agregar_avatar(request):
     else:
         form = AvatarFormulario()
     return render(request, 'Atletas/agregar_avatar.html', {'form': form})
+
+class ScoreCreateView(CreateView):
+    model = Score
+    form_class = ScoreForm
+    template_name = 'Atletas/score.html'
+    success_url = reverse_lazy('inicio')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super(ScoreCreateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.date = datetime.now()
+        return super().form_valid(form)
+    
