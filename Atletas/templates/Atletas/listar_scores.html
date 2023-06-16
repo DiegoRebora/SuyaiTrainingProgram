@@ -1,0 +1,42 @@
+{% extends "Planificaciones/base.html" %}
+
+{% block contenido %}
+<section>
+    <div>
+      <h1>Scores</h1>
+      <form action="{% url 'buscar_score' %}" method="get">
+        {% csrf_token %}
+        <input type="text" name="q">
+        <input type="submit" value="Buscar por fecha // AAAA-MM-DD">
+      </form>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th style="color:red">Fecha</th>
+            <th style="color:red">Atleta</th>
+            <th style="color:red"> Score 1</th>
+            <th style="color:red"> Score 2</th>
+            <th style="color:red"> Score 3</th>
+            <th style="color:red">Comentario</th>
+          </tr>
+          {% for score in object_list %}
+          <tr>
+            <td style="color:white">{{ score.date }}</td>
+            <td style="color:white">{{ score.user.first_name }}</td>
+            <td style="color:white">{{ score.score1 }}</td>
+            <td style="color:white">{{ score.score2 }}</td>
+            <td style="color:white">{{ score.score3 }}</td>
+            <td style="color:white">{{ score.comment }}</td>
+
+
+          </tr>
+          {% empty %}
+          <tr>
+            <td style="color:red" colspan="5">No hay resultados para la búsqueda.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock contenido %}

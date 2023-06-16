@@ -3,8 +3,9 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from Atletas.models import Avatar
-from Atletas.models import Atleta, Score
+from Atletas.models import Atleta, Score, Planificaciones
 from datetime import datetime
+from django.forms import DateInput
 
 class UserRegisterForm(UserCreationForm):
    
@@ -138,31 +139,16 @@ class ScoreForm(forms.ModelForm):
     class Meta:
         model = Score
         fields = ['score1', 'score2', 'score3', 'comment', 'date']
+
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+
+class PlanificacionesForm(forms.ModelForm):
+    class Meta:
+        model = Planificaciones
+        fields = ['fecha_inicio', 'numero_semana', 'imagen_planificacion', 'comentario']
         widgets = {
-            'date': forms.DateTimeInput(attrs={'readonly': False}),
+            'fecha_inicio': forms.DateInput(attrs={'type': 'date'}),
+            'comentario': forms.Textarea(attrs={'rows': 3}),
         }
 
-    def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)
-        super(ScoreForm, self).__init__(*args, **kwargs)
-
-    def clean(self):
-        cleaned_data = super().clean()
-        score1 = cleaned_data.get('score1')
-        score2 = cleaned_data.get('score2')
-        score3 = cleaned_data.get('score3')
-
-        if not score1 and not score2 and not score3:
-            raise forms.ValidationError('Debe ingresar al menos un puntaje.')
-
-        return cleaned_data
-
-    def save(self, commit=True):
-        instance = super(ScoreForm, self).save(commit=False)
-        instance.user = self.user
-        instance.date = datetime.now()
-
-        if commit:
-            instance.save()
-
-        return instance
+    imagen_planificacion = forms.ImageField(required=False)

@@ -1,17 +1,18 @@
 from django.shortcuts import render
 from datetime import datetime
+from django import forms
 
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import UpdateView, CreateView, DetailView, ListView, DeleteView
 
-from Atletas.forms import UserRegisterForm, UserUpdateForm,  AtletaForm, AtletaUpdateForm, AvatarFormulario, ScoreForm
+from Atletas.forms import UserRegisterForm, UserUpdateForm,  AtletaForm, AvatarFormulario, ScoreForm, PlanificacionesForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import login, authenticate
-from Atletas.models import Avatar, Atleta, Score
+from Atletas.models import Avatar, Atleta, Score, Planificaciones
 # Create your views here.
 def registro(request):
    if request.method == "POST":
@@ -145,19 +146,50 @@ class ScoreCreateView(CreateView):
     model = Score
     form_class = ScoreForm
     template_name = 'Atletas/score.html'
-    success_url = reverse_lazy('inicio')
+    success_url = reverse_lazy('listar_scores')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        form.instance.date = form.cleaned_data['date']
         return super().form_valid(form)
 
-    def get_form_kwargs(self):
-        kwargs = super(ScoreCreateView, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['date'].widget = forms.DateInput(attrs={'type': 'date'})
+        return form
+class ScoreListView(ListView):
+    model = Score
+    template_name = 'Atletas/listar_scores.html'
 
+class ScoreSearchView(LoginRequiredMixin, ListView):
+    model = Score
+    template_name = 'Atletas/listar_scores.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        fecha_ingresada = self.request.GET.get('q')
+        if fecha_ingresada:
+            try:
+                fecha = datetime.strptime(fecha_ingresada, '%Y-%m-%d').date()
+            except ValueError:
+                # Si la fecha ingresada no es válida, retornamos una lista vacía
+                return Score.objects.none()
+            else:
+                queryset = queryset.filter(date=fecha)
+        return queryset
+
+
+class PlanificacionesCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    model = Planificaciones
+    permission_required = "planificaciones.add_planificaciones"
+    form_class = PlanificacionesForm
+    template_name = "Atletas/crear_plani.html"
+    success_url = reverse_lazy("listar_planis")
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        form.instance.date = datetime.now()
+        # Asignamos el usuario actual como creador de la planificación
+        form.instance.creador = self.request.user
         return super().form_valid(form)
-    
+
+class PlanificacionesListView(ListView):
+    model = Score
+    template_name = 'Atletas/listar_planis.html'

@@ -15,5 +15,9 @@ urlpatterns = [
     path("listar_atletas/", AtletaListView.as_view(), name="listar_atletas"),
     path("buscar_atleta/", AtletaSearchView. as_view(), name="buscar_atleta"),
     path("crear_score/", ScoreCreateView.as_view(), name="crear_score"),
-    
+    path("listar_scores/", ScoreListView.as_view(), name="listar_scores"),
+    path("buscar_score/", ScoreSearchView. as_view(), name="buscar_score"),
+    path("crear_planificacion/", PlanificacionesCreateView .as_view(), name="crear_plani"),
+    path("listar_planificaciones/", PlanificacionesListView.as_view(), name="listar_planis"),
+
 ]
