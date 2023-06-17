@@ -4,7 +4,12 @@
 <section>
     <div>
       <h1>PLANIFICACION</h1>
-      {% if perms.planificacion.add_planificacion %}
+      <form action="{% url 'buscar_plani' %}" method="get">
+        {% csrf_token %}
+        <input type="text" name="q">
+        <input type="submit" value="Buscar por semana">
+      </form>
+      {% if perms.planificaciones.add_planificaciones %}
       <a href="{% url "crear_plani" %}" style="color:red;">Crear Plani</a>
       <br><br>
       {% endif %}
@@ -14,31 +19,35 @@
           <tr>
             <th style="color:red">Semana</th>
             <th style="color:red">Fecha inicio</th>
-            <th style="color:red"> Descripcion</th>
             <th style="color:red"> Ver plani</th>
             <th style="color:red"></th>
             <th></th>
           </tr>
           {% for planificacion in object_list %}
           <tr>
-            <td style="color:white">{{ planificacion.semana }}</td>
+            <td style="color:white">{{ planificacion.numero_semana }}</td>
             <td style="color:white">{{ planificacion.fecha_inicio }}</td>
-            <td style="color:white">{{ planificacion.descripcion }}</td>
+            
             <td>
-              
-                <a href = "{% url "ver_plani" planificacion.id %}">Ver</a>
+
+                <a href="{% url 'ver_plani' pk=planificacion.id %}">Ver planificación</a>
+
                   
             </td>
             <td>
-              {% if perms.planificacion.change_planificacion %}
-                <a href={% url "editar_plani" planificacion.id %}> Editar Plani </a>
+              {% if perms.planificaciones.change_planificaciones %}
+                <a href={% url "editar_plani" pk=planificacion.id %}>
+                    <i class="bi bi-pencil"></i> 
               {% endif %}
+
             </td>
             <td>
-              {% if perms.planificacion.delete_planificacion %}
-                <a href = "{% url "borrar_plani" planificacion.id %}">
+ 
+              {% if perms.planificaciones.delete_planificaciones %}
+                <a href = "{% url "borrar_plani" pk=planificacion.id %}">
                   <i class="bi bi-trash"></i>
               {% endif %}
+
             </td>
           </tr>
           {% empty %}
@@ -51,4 +60,3 @@
     </div>
   </section>
 {% endblock contenido %}
-

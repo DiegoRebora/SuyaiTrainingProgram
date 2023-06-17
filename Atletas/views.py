@@ -121,6 +121,7 @@ class AtletaSearchView(LoginRequiredMixin, ListView):
 class AtletaDetailView(LoginRequiredMixin, DetailView):
     model = Atleta
     template_name = "Atletas/atleta_detail.html"
+    login_url = 'login'
 
 
 
@@ -183,7 +184,7 @@ class PlanificacionesCreateView(LoginRequiredMixin, PermissionRequiredMixin, Cre
     model = Planificaciones
     permission_required = "planificaciones.add_planificaciones"
     form_class = PlanificacionesForm
-    template_name = "Atletas/crear_plani.html"
+    template_name = "Atletas/formulario_plani.html"
     success_url = reverse_lazy("listar_planis")
     def form_valid(self, form):
         # Asignamos el usuario actual como creador de la planificación
@@ -191,5 +192,40 @@ class PlanificacionesCreateView(LoginRequiredMixin, PermissionRequiredMixin, Cre
         return super().form_valid(form)
 
 class PlanificacionesListView(ListView):
-    model = Score
+    model = Planificaciones
     template_name = 'Atletas/listar_planis.html'
+    login_url = 'login'
+
+
+class PlanificacionesUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = Planificaciones
+    permission_required = "planificaciones.change_planificaciones"
+    form_class = PlanificacionesForm
+    template_name = "Atletas/formulario_plani.html"
+    success_url = reverse_lazy("listar_planis")
+    
+    def form_valid(self, form):
+        # Asignamos el usuario actual como creador de la planificación
+        form.instance.creador = self.request.user
+        return super().form_valid(form)
+
+class PlanificacionesDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = Planificaciones
+    permission_required = "planificaciones.delete_planificaciones"
+    template_name = "Atletas/borrar_plani.html"
+    success_url = reverse_lazy("listar_planis")
+
+class PlanificacionesDetailView(LoginRequiredMixin, DetailView):
+    model = Planificaciones
+    template_name = "Atletas/ver_plani.html"
+    login_url = 'login'
+
+class PlanificacionesSearchView(LoginRequiredMixin, ListView):
+    model = Planificaciones
+    template_name = 'Atletas/listar_planis.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Planificaciones.objects.filter(numero_semana__icontains=query)
+        return object_list
+

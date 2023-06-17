@@ -12,22 +12,22 @@
       <table class="table">
         <tbody>
           <tr>
-            <th style="color:red">Fecha</th>
             <th style="color:red">Atleta</th>
-            <th style="color:red"> Score 1</th>
-            <th style="color:red"> Score 2</th>
-            <th style="color:red"> Score 3</th>
-            <th style="color:red">Comentario</th>
+            <th style="color:red"> Score1</th>
+            <th style="color:red"> Score2</th>
+            <th style="color:red"> Score3</th>
+            <th style="color:red">Sensaciones</th>
+            <th style="color:red">Fecha</th>
           </tr>
           {% for score in object_list %}
           <tr>
-            <td style="color:white">{{ score.date }}</td>
+            
             <td style="color:white">{{ score.user.first_name }}</td>
             <td style="color:white">{{ score.score1 }}</td>
             <td style="color:white">{{ score.score2 }}</td>
             <td style="color:white">{{ score.score3 }}</td>
             <td style="color:white">{{ score.comment }}</td>
-
+            <td style="color:white">{{ score.date }}</td>
 
           </tr>
           {% empty %}

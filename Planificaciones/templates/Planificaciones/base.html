@@ -44,6 +44,9 @@
                 <a class="navbar-brand" href="{% url 'inicio' %}">SUYAI ATLETAS</a>
                 <a class="navbar-brand" href="{% url 'listar_planis' %}">Planificaciones</a>
                 <a class="navbar-brand" href="{% url 'listar_atletas' %}">Atletas</a>
+                <a class="navbar-brand" href="{% url 'listar_scores' %}">Scores</a>
+                
+
                 {% if user.is_authenticated %}
                 <div class="dropdown "  >
                     <button
@@ -124,6 +127,7 @@
                             <li class="list-inline-item">
                                 <a href="https://www.instagram.com/suyai.fitness/"><i class="bi-instagram fs-3"></i>Suyai Al Río</a>
                             </li>
+
                         </ul>
                     </div>
                 </div>
