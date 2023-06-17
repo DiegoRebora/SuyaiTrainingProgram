@@ -158,9 +158,10 @@ class ScoreCreateView(CreateView):
         form = super().get_form(form_class)
         form.fields['date'].widget = forms.DateInput(attrs={'type': 'date'})
         return form
-class ScoreListView(ListView):
+class ScoreListView(LoginRequiredMixin, ListView):
     model = Score
     template_name = 'Atletas/listar_scores.html'
+    login_url = 'login'
 
 class ScoreSearchView(LoginRequiredMixin, ListView):
     model = Score
