@@ -3,7 +3,9 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from Atletas.models import Avatar
-from Atletas.models import Atleta
+from Atletas.models import Atleta, Score, Planificaciones
+from datetime import datetime
+from django.forms import DateInput
 
 class UserRegisterForm(UserCreationForm):
    
@@ -52,10 +54,48 @@ class UserUpdateForm(forms.ModelForm):
 
         return user
 
+
 class AtletaForm(forms.ModelForm):
+    grace = forms.CharField(required=False)
+    fran = forms.CharField(required=False)
+    murph = forms.CharField(required=False)
+
     class Meta:
         model = Atleta
-        fields = ['categoria', 'apodo']
+        fields = ['categoria', 'apodo', 'grace', 'fran', 'murph', 'backsquat_rm', 'clean_rm', 'jerk_rm', 'snatch_rm', 'deadlift_rm']
+        widgets = {
+            'categoria': forms.TextInput(attrs={'class': 'form-control'}),
+            'apodo': forms.TextInput(attrs={'class': 'form-control'}),
+            'grace': forms.TextInput(attrs={'class': 'form-control'}),
+            'fran': forms.TextInput(attrs={'class': 'form-control'}),
+            'murph': forms.TextInput(attrs={'class': 'form-control'}),
+            'backsquat_rm': forms.NumberInput(attrs={'class': 'form-control'}),
+            'clean_rm': forms.NumberInput(attrs={'class': 'form-control'}),
+            'jerk_rm': forms.NumberInput(attrs={'class': 'form-control'}),
+            'snatch_rm': forms.NumberInput(attrs={'class': 'form-control'}),
+            'deadlift_rm': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+
+    def save(self, commit=True, user=None):
+        atleta = super().save(commit=False)
+        if user:
+            atleta.user = user
+        if commit:
+            atleta.save()
+        return atleta
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['categoria'].widget.attrs.update({'class': 'form-control'})
+        self.fields['apodo'].widget.attrs.update({'class': 'form-control'})
+        self.fields['grace'].widget.attrs.update({'class': 'form-control'})
+        self.fields['fran'].widget.attrs.update({'class': 'form-control'})
+        self.fields['murph'].widget.attrs.update({'class': 'form-control'})
+        self.fields['backsquat_rm'].widget.attrs.update({'class': 'form-control'})
+        self.fields['clean_rm'].widget.attrs.update({'class': 'form-control'})
+        self.fields['jerk_rm'].widget.attrs.update({'class': 'form-control'})
+        self.fields['snatch_rm'].widget.attrs.update({'class': 'form-control'})
+        self.fields['deadlift_rm'].widget.attrs.update({'class': 'form-control'})
 
 
 class AtletaUpdateForm(forms.ModelForm):
@@ -92,3 +132,23 @@ class AvatarFormulario(forms.ModelForm):
    class Meta:
        model = Avatar
        fields = ['imagen']
+
+
+
+class ScoreForm(forms.ModelForm):
+    class Meta:
+        model = Score
+        fields = ['score1', 'score2', 'score3', 'comment', 'date']
+
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+
+class PlanificacionesForm(forms.ModelForm):
+    class Meta:
+        model = Planificaciones
+        fields = ['fecha_inicio', 'numero_semana', 'imagen_planificacion', 'comentario']
+        widgets = {
+            'fecha_inicio': forms.DateInput(attrs={'type': 'date'}),
+            'comentario': forms.Textarea(attrs={'rows': 3}),
+        }
+
+    imagen_planificacion = forms.ImageField(required=False)
