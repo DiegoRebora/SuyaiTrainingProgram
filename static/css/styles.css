@@ -11375,3 +11375,7 @@ footer.footer {
   padding-top: 4rem;
   padding-bottom: 4rem;
 }
+
+.btn-secondary {
+  background-color: #ff7c00;
+}
