@@ -1,15 +1,14 @@
 {% extends "Planificaciones/base.html" %}
+
 {% block contenido %}
-<section >
+
+<section>
   <div>
-   
     {% if user.is_authenticated %}
-      <h1 style="text-transform: uppercase;">BIENVENID@   <span style="color: white">{{user.first_name}}</span></h1> 
+      <h1 style="text-transform: uppercase;">BIENVENID@&nbsp;&nbsp;<span style="color: white">{{ user.first_name }}</span></h1>
       <img src="{{ user.avatar.imagen.url }}" style="width: 150px; height: 150px; border-radius: 50%; position: absolute; top: 290px; right: 850px;">
     {% endif %}
   </div>
 </section>
-
-
 
 {% endblock contenido %}

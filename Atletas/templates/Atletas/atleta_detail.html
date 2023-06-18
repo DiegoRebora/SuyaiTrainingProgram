@@ -18,7 +18,7 @@
     <li><strong>Deadlift RM:</strong> {{ atleta.deadlift_rm }}</li>
   </ul>
   <img src="{{ atleta.user.avatar.imagen.url }}" style="width: 250px; height: 250px; border-radius: 50%; position: absolute; top: 150px; right: 750px;">
-  <a href="{% url 'listar_atletas' %}" class="btn btn-primary">Volver</a>
+  <a href="{% url 'listar_atletas' %}" class="btn btn-secondary btn-sm">Volver</a>
 </div>
 
 {% endblock contenido %}

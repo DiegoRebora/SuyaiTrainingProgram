@@ -31,7 +31,7 @@
                 padding: 4rem 3rem;
             }
             #main {
-                min-height: calc(70vh - 70px); 
+                min-height: calc(80vh - 80px); 
 
             }
         </style>
@@ -41,7 +41,7 @@
         <nav class="navbar bg-dark" data-bs-theme="dark">
             <div class="container">
             
-                <a class="navbar-brand" href="{% url 'inicio' %}">SUYAI TRAINING PROGRAM</a>
+                <a class="navbar-brand naranja-text" href="{% url 'inicio' %}">SUYAI TRAINING PROGRAM</a>
                 <a class="navbar-brand" href="{% url 'listar_planis' %}">Planificaciones</a>
                 <a class="navbar-brand" href="{% url 'listar_atletas' %}">Atletas</a>
                 <a class="navbar-brand" href="{% url 'listar_scores' %}">Scores</a>
@@ -111,21 +111,21 @@
                 <div class="row">
                     <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
                         <ul class="list-inline mb-2">
-                            <li class="list-inline-item"><a href="#!">Ayuda</a></li>
+                            <li class="list-inline-item"><a style= "color: orange"; href="#!">Ayuda</a></li>
                             <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Contacto</a></li>
+                            <li class="list-inline-item"><a style= "color: orange"; href="#!">Contacto</a></li>
                             <li class="list-inline-item">⋅</li>
                             <li class="list-inline-item"><a>Acerca de nosotros</a></li>
                         </ul>
-                        <p class="text-muted small mb-4 mb-lg-0">&copy; DR Devs </p>
+                        <p class="text-muted small mb-4 mb-lg-0">&copy; <a href="{% url 'about_dr' %}">DR Devs</a></p>
                     </div>
                     <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item">
-                                <a href="https://www.instagram.com/suyai_saavedra/?hl=es"><i class="bi-instagram fs-3"></i>Suyai Saavedra</a>
+                                <a href="https://www.instagram.com/suyai_saavedra/?hl=es"><i class="bi-instagram fs-3", style= "color: orange"></i>Suyai Saavedra</a>
                             </li>
                             <li class="list-inline-item">
-                                <a href="https://www.instagram.com/suyai.fitness/"><i class="bi-instagram fs-3"></i>Suyai Al Río</a>
+                                <a href="https://www.instagram.com/suyai.fitness/"><i class="bi-instagram fs-3", style= "color: orange"></i>Suyai Al Río</a>
                             </li>
 
                         </ul>

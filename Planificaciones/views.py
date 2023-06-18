@@ -9,3 +9,5 @@ def inicio(request):
         context=contexto,
     )
 
+def about_dr(request):
+    return render(request, 'Planificaciones/about_dr.html')

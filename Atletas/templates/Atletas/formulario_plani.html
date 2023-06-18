@@ -5,12 +5,12 @@
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
-  <input type="submit" value="Guardar" />
+  <input type="submit" value="Guardar" class="btn btn-secondary btn-sm"/>
 </form>
 
 <br>
 <br>
 <br>
-<a href="{% url 'listar_planis' %}">Volver lista</a>
+<a href="{% url 'listar_planis' %}">Volver</a>
 
 {% endblock contenido %}
