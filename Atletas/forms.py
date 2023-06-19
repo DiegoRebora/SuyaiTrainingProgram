@@ -150,5 +150,3 @@ class PlanificacionesForm(forms.ModelForm):
             'fecha_inicio': forms.DateInput(attrs={'type': 'date'}),
             'comentario': forms.Textarea(attrs={'rows': 3}),
         }
-
-    imagen_planificacion = forms.ImageField(required=False)

@@ -32,7 +32,7 @@ class Atleta(models.Model):
     deadlift_rm = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
-        return self.apodo
+        return self.apodo or self.user.username
 
 class Score(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -50,4 +50,4 @@ class Planificaciones(models.Model):
     imagen_planificacion = models.ImageField(upload_to='planificaciones/')
     comentario = models.CharField(max_length=255)
     def __str__(self):
-        return self.numero_semana
+        return str(self.numero_semana)
