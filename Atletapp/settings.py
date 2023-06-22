@@ -133,3 +133,15 @@ LOGIN_URL = 'login'
 #Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.live.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'suyaitrainingprogram@hotmail.com' # Tu dirección de correo electrónico
+EMAIL_HOST_PASSWORD = 'Morcilla2023' # Tu contraseña de Gmail o la cont
+EMAIL_CHARSET = 'utf-8'
+# Manejo de errores al enviar correos electrónicos
+DEFAULT_FROM_EMAIL = 'suyaitrainingprogram@hotmail.com' # Tu dirección de correo electrónico
+SERVER_EMAIL = 'suyaitrainingprogram@hotmail.com' # Tu dirección de correo electrónico
+ADMINS = [('Diego Rébora', 'bogacore@hotmail.com')] # La dirección de correo electrónico a la que se enviarán los mensajes de error
