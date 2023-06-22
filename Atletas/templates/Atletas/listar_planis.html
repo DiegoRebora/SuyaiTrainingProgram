@@ -3,25 +3,25 @@
 {% block contenido %}
 <section>
     <div>
-      <h1>Planificaciones</h1>
+      <h1 style="color:orange">Planificaciones</h1>
       <form action="{% url 'buscar_plani' %}" method="get">
         {% csrf_token %}
         <input type="text" name="q">
         <input type="submit" value="Buscar por semana">
       </form>
       {% if perms.planificaciones.add_planificaciones %}
-      <a href="{% url "crear_plani" %}" style="color:red;">Crear Plani</a>
+      <a href="{% url "crear_plani" %}" style="color: orange;">Crear Plani</a>
       <br><br>
       {% endif %}
 
       <table class="table">
         <tbody>
           <tr>
-            <th style="color:red">Semana</th>
-            <th style="color:red">Fecha inicio</th>
-            <th style="color:red"> Ver plani</th>
-            <th style="color:red"></th>
-            <th></th>
+            <th style="color:white">Semana</th>
+            <th style="color:white">Fecha inicio</th>
+            <th style="color:white"> Ver plani</th>
+            <th style="color:white"></th>
+            <th style="color:white"></th>
           </tr>
           {% for planificacion in object_list %}
           <tr>
@@ -30,7 +30,7 @@
             
             <td>
 
-                <a href="{% url 'ver_plani' pk=planificacion.id %}">Ver planificación</a>
+                <a style="color:orange", href="{% url 'ver_plani' pk=planificacion.id %}">Ver planificación</a>
 
                   
             </td>
@@ -52,7 +52,7 @@
           </tr>
           {% empty %}
           <tr>
-            <td style="color:red" colspan="5">No hay resultados para la búsqueda.</td>
+            <td colspan="5">No hay resultados para la búsqueda.</td>
           </tr>
           {% endfor %}
         </tbody>

@@ -2,44 +2,50 @@
 
 {% block contenido %}
 <section>
-    <div>
-      <h1>Atletas</h1>
-      <form action="{% url 'buscar_atleta' %}" method="get">
-        {% csrf_token %}
-        <input type="text" name="q">
-        <input type="submit" value="Buscar por nombre">
-      </form>
-      <table class="table">
-        <tbody>
+  <div class="container" style="padding-bottom: 100px;">
+    <h1 style="color:orange">Atletas</h1>
+    <form action="{% url 'buscar_atleta' %}" method="get">
+      {% csrf_token %}
+      <input type="text" name="q">
+      <input type="submit" value="Buscar por nombre">
+    </form>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
           <tr>
-            <th style="color:red"></th>
-            <th style="color:red">Nombre</th>
-            <th style="color:red">Apellido</th>
-            <th style="color:red"> Apodo</th>
-            <th style="color:red"> + Info</th>
+            <th></th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Apodo</th>
+            <th>+ Info</th>
             <th></th>
           </tr>
+        </thead>
+        <tbody>
           {% for atleta in object_list %}
           <tr>
-            <td><img src="{{ atleta.user.avatar.imagen.url }}"  style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;"></td>
-            <td style="color:white">{{ atleta.user.first_name }}</td>
-            <td style="color:white">{{ atleta.user.last_name }}</td>
-            <td style="color:white">{{ atleta.apodo }}</td>
+            <td><img src="{{ atleta.user.avatar.imagen.url }}" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;"></td>
+            <td>{{ atleta.user.first_name }}</td>
+            <td>{{ atleta.user.last_name }}</td>
+            <td>{{ atleta.apodo }}</td>
             <td>
-              
-                <a href = "{% url "ver_atleta" atleta.id %}">Ver</a>
-                  
+              <a style="color:orange", href="{% url 'ver_atleta' atleta.id %}">Ver</a>
             </td>
-
-
           </tr>
           {% empty %}
           <tr>
-            <td style="color:red" colspan="5">No hay resultados para la búsqueda.</td>
+            <td colspan="5">No hay resultados para la búsqueda.</td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
-  </section>
+  </div>
+</section>
+<style>
+    th, td {
+        color: white;
+      }
+</style>
+
 {% endblock contenido %}

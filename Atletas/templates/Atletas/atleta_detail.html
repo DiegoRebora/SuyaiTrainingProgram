@@ -3,22 +3,78 @@
 {% block contenido %}
 <div class="perfil-atleta">
   <h2>Perfil de Atleta</h2>
-  <ul>
-    <li><strong>Nombre:</strong> {{ atleta.user.first_name }}</li>
-    <li><strong>Apellido:</strong> {{ atleta.user.last_name }}</li>
-    <li><strong>Apodo:</strong> {{ atleta.apodo }}</li>
-    <li><strong>Categoría:</strong> {{ atleta.categoria }}</li>
-    <li><strong>Grace:</strong> {{ atleta.grace }}</li>
-    <li><strong>Fran:</strong> {{ atleta.fran }}</li>
-    <li><strong>Murph:</strong> {{ atleta.murph }}</li>
-    <li><strong>Backsquat RM:</strong> {{ atleta.backsquat_rm }}</li>
-    <li><strong>Clean RM:</strong> {{ atleta.clean_rm }}</li>
-    <li><strong>Jerk RM:</strong> {{ atleta.jerk_rm }}</li>
-    <li><strong>Snatch RM:</strong> {{ atleta.snatch_rm }}</li>
-    <li><strong>Deadlift RM:</strong> {{ atleta.deadlift_rm }}</li>
-  </ul>
-  <img src="{{ atleta.user.avatar.imagen.url }}" style="width: 250px; height: 250px; border-radius: 50%; position: absolute; top: 150px; right: 150px;">
+  <div class="avatar-container">
+    <img src="{{ atleta.user.avatar.imagen.url }}" class="avatar-image">
+  </div>
+  <div class="atleta-info">
+    <ul>
+      <li><strong>Nombre:</strong> {{ atleta.user.first_name }}</li>
+      <li><strong>Apellido:</strong> {{ atleta.user.last_name }}</li>
+      <li><strong>Apodo:</strong> {{ atleta.apodo }}</li>
+      <li><strong>Categoría:</strong> {{ atleta.categoria }}</li>
+      <li><strong>Grace:</strong> {{ atleta.grace }}</li>
+      <li><strong>Fran:</strong> {{ atleta.fran }}</li>
+      <li><strong>Murph:</strong> {{ atleta.murph }}</li>
+      <li><strong>Backsquat RM:</strong> {{ atleta.backsquat_rm }}</li>
+      <li><strong>Clean RM:</strong> {{ atleta.clean_rm }}</li>
+      <li><strong>Jerk RM:</strong> {{ atleta.jerk_rm }}</li>
+      <li><strong>Snatch RM:</strong> {{ atleta.snatch_rm }}</li>
+      <li><strong>Deadlift RM:</strong> {{ atleta.deadlift_rm }}</li>
+    </ul>
+  </div>
   <a href="{% url 'listar_atletas' %}" class="btn btn-secondary btn-sm">Volver</a>
 </div>
 
+<style>
+  .perfil-atleta {
+    position: relative;
+  }
+  .atleta-info ul {
+    list-style: none; /* quitamos los puntos de la lista */
+    margin: 0;
+    padding: 0;
+  }
+  .atleta-info li {
+    margin-bottom: 10px; /* aumentamos el margen inferior para separar cada elemento */
+  }
+  .avatar-container {
+    position: absolute; /* cambiamos la posición a absoluta para que se ubique dentro del cuerpo de la plantilla */
+    top: 0; /* ajustamos la posición vertical */
+    right: 0; /* ajustamos la posición horizontal */
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: white;
+  }
+  .avatar-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  @media (max-width: 767px) {
+    .perfil-atleta {
+      display: flex; /* usamos flexbox para alinear los elementos verticalmente */
+      flex-direction: column; /* hacemos que los elementos se apilen verticalmente */
+      align-items: center; /* centramos todo el contenido horizontalmente */
+    }
+    .avatar-container {
+      position: static; /* volvemos a la posición estática en pantallas pequeñas */
+      width: 200px;
+      height: 200px;
+      margin-right: 20px; /* agregamos un margen derecho para separar la imagen de la información */
+      margin-bottom: 20px; /* agregamos un margen inferior para separar el botón de la información */
+    }
+    .atleta-info {
+      text-align: center; /* centramos el texto horizontalmente */
+    }
+    .atleta-info ul {
+      margin: 0; /* quitamos el margen superior para que la información esté en la misma línea vertical que la imagen */
+    }
+    .btn {
+      margin-top: 20px; /* agregamos un margen superior al botón para separarlo del resto de la información */
+    }
+  }
+</style>
 {% endblock contenido %}

@@ -160,12 +160,12 @@ class ScoreCreateView(CreateView):
         return form
 class ScoreListView(LoginRequiredMixin, ListView):
     model = Score
-    template_name = 'Atletas/listar_scores.html'
+    template_name = 'Atletas/listar_scores2.html'
     login_url = 'login'
 
 class ScoreSearchView(LoginRequiredMixin, ListView):
     model = Score
-    template_name = 'Atletas/listar_scores.html'
+    template_name = 'Atletas/listar_scores2.html'
 
     def get_queryset(self):
         queryset = super().get_queryset()

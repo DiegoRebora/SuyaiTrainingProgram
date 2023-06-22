@@ -2,41 +2,75 @@
 
 {% block contenido %}
 <section>
-    <div>
-      <h1>Scores</h1>
+    <div class="container">
+      <h1 style="color:orange">Scores</h1>
       <form action="{% url 'buscar_score' %}" method="get">
         {% csrf_token %}
         <input type="text" name="q">
         <input type="submit" value="Buscar por fecha // AAAA-MM-DD">
       </form>
-      <table class="table">
-        <tbody>
-          <tr>
-            <th style="color:red">Atleta</th>
-            <th style="color:red"> Score1</th>
-            <th style="color:red"> Score2</th>
-            <th style="color:red"> Score3</th>
-            <th style="color:red">Sensaciones</th>
-            <th style="color:red">Fecha</th>
-          </tr>
-          {% for score in object_list %}
-          <tr>
-            
-            <td style="color:white">{{ score.user.first_name }}</td>
-            <td style="color:white">{{ score.score1 }}</td>
-            <td style="color:white">{{ score.score2 }}</td>
-            <td style="color:white">{{ score.score3 }}</td>
-            <td style="color:white">{{ score.comment }}</td>
-            <td style="color:white">{{ score.date }}</td>
-
-          </tr>
-          {% empty %}
-          <tr>
-            <td style="color:red" colspan="5">No hay resultados para la búsqueda.</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <div class="table-responsive table-container">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Atleta</th>
+              <th>Score1</th>
+              <th>Score2</th>
+              <th>Score3</th>
+              <th>Sensaciones</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for score in object_list %}
+            <tr>
+              <td style="color:white">{{ score.user.first_name }}</td>
+              <td style="color:white">{{ score.score1 }}</td>
+              <td style="color:white">{{ score.score2 }}</td>
+              <td style="color:white">{{ score.score3 }}</td>
+              <td style="color:white">{{ score.comment }}</td>
+              <td style="color:white">{{ score.date }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="8";>No hay resultados para la búsqueda.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
+  
+  <style>
+    section {
+      background-image: url('https://images.unsplash.com/photo-1555529669-5e0f1c8c4d84');
+      background-size: cover;
+      background-position: center;
+      height: 100%;
+    }
+    .container {
+      padding-top: 50px;
+      padding-bottom: 50px;
+      color: white;
+    }
+    .table {
+      margin-bottom: 0;
+    }
+    .table td,
+    .table th {
+      border-top: none;
+      color: white;
+    }
+    .table th {
+      font-weight: normal;
+    }
+    .table-responsive {
+      overflow-x: auto;
+    }
+    .table-container {
+      max-height: calc(100vh - 300px); /* Ajustar este valor según el tamaño del footer */
+      overflow-y: auto;
+    }
+  </style>
 {% endblock contenido %}
