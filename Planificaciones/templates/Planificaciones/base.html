@@ -40,7 +40,7 @@
         <nav class="navbar bg-dark" data-bs-theme="dark">
             <div class="container">
             
-                <a class="navbar-brand naranja-text" href="{% url 'inicio' %}">SUYAI TRAINING PROGRAM</a>
+                <a class="navbar-brand naranja-text" href="{% url 'about_us' %}">SUYAI TRAINING PROGRAM</a>
                 <a class="navbar-brand" href="{% url 'listar_planis' %}">Planificaciones</a>
                 <a class="navbar-brand" href="{% url 'listar_atletas' %}">Atletas</a>
                 <a class="navbar-brand" href="{% url 'listar_scores' %}">Scores</a>
@@ -114,7 +114,7 @@
                             <li class="list-inline-item">⋅</li>
                             <li class="list-inline-item"><a style= "color: orange"; href="#!">Contacto</a></li>
                             <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a>Acerca de nosotros</a></li>
+                            <li class="list-inline-item"><a style= "color: orange"; href="{% url 'about_us' %}">Acerca de nosotros</a></li>
                         </ul>
                         <p class="text-muted small mb-4 mb-lg-0">&copy; <a href="{% url 'about_dr' %}">DR Devs</a></p>
                     </div>

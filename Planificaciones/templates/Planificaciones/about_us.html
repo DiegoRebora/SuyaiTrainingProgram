@@ -1,0 +1,25 @@
+{% extends "Planificaciones/base.html" %}
+
+{% block contenido %}
+<div class="container" style="background-color: black; padding: 20px;">
+    <div class="elementor-widget-container">
+        <h2 class="elementor-heading-title elementor-size-default" style="color: orange; text-align: center">SOBRE NOSOTROS</h2>		
+    </div>
+
+    <p style="text-align: center;">Suyai Training Program, es el resultado de más de 8 años de crecimiento conjunto de nuestro <strong><a style="color: orange"; href="{% url 'about_hc' %}">HC Seba Costas</a></strong> y sus más entusiastas alumnos.</p>
+
+    <p style="text-align: center;">Lo que naciera como una comunidad autogestionada, de amantes del Crossfit, hoy se ha convertido en un programa estructurado de desarrollo de atletas de todos los niveles, que sigue rescatando los viejos valores, usos y constumbres del Crossfit. Atletas Scaled, Advanced, Rx, Elite y Masters, entrenan codo a codo, se apoyan, se aconsejan, se alientan, compiten y sobre todo; se saludan y felicitan , al final de cada WOD, sabieno que sin importar el nivel de cada uno, la comunidad que integran los potencia como atletas y personas.</p>
+
+    <p style="text-align:  center;">Suyai Training Program se adapta a la necesidad de cada uno de sus integrantes, con progresiones y ejercicios puntuales que favorecen el desarrollo y crecimiento de sus aptitudes físicas.</p>
+
+    <p style="text-align: center;">Finalmente, en esta comunidad, creemos que mucho más importante que llegar a los Games, es disfrutar cada entrenamiento y volver a casa, sintiéndonos mejor que antes de entrar al box.</p>
+</div>
+{% endblock contenido %}
+
+{% block estilos %}
+<style>
+    .elementor-widget-container p {
+        text-align: center;
+    }
+</style>
+{% endblock estilos %}
