@@ -24,7 +24,7 @@ def about_hc(request):
 
 
 class PasswordResetView(FormView):
-    template_name = 'registration/passsword_reset_form.html'
+    template_name = 'registration\password_reset_form.html'
     form_class = PasswordResetForm
     success_url = '/recuperar-contraseña/enviado/'
 
@@ -38,3 +38,4 @@ class PasswordResetView(FormView):
             request=self.request,
         )
         return super().form_valid(form)
+    

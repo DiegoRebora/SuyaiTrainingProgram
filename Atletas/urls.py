@@ -23,5 +23,6 @@ urlpatterns = [
     path("borrar_planificacion/<int:pk>/", PlanificacionesDeleteView.as_view(), name="borrar_plani"),
     path("ver_planificacion/<int:pk>/", PlanificacionesDetailView.as_view(), name="ver_plani"),
     path("buscar_planificacion/", PlanificacionesSearchView. as_view(), name="buscar_plani"),
-
+    path("editar_score/<int:pk>/", ScoreUpdateView.as_view(), name="editar_score"),
+    path("borrar_score/<int:pk>/", ScoreDeleteView.as_view(), name="borrar_score"),
 ]

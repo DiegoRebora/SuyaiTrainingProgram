@@ -1,0 +1,16 @@
+{% extends "Planificaciones/base.html" %}
+{% block contenido %}
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <p>¿Estas seguro deseas eliminar {{object}}?</p>
+  <input type="submit" class="btn btn-secondary btn-sm" value="Eliminar" />
+</form>
+
+<br>
+<br>
+<br>
+<a href="{% url 'listar_scores' %}">Volver lista</a>
+
+{% endblock contenido %}

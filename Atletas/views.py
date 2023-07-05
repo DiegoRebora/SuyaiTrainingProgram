@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from datetime import datetime
 from django import forms
-
+from datetime import date 
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -158,14 +158,30 @@ class ScoreCreateView(CreateView):
         form = super().get_form(form_class)
         form.fields['date'].widget = forms.DateInput(attrs={'type': 'date'})
         return form
+"""class ScoreListView(LoginRequiredMixin, ListView):
+    model = Score
+    template_name = 'Atletas/listar_scores.html'
+    login_url = 'login'
+
+    def get_queryset(self):
+        return super().get_queryset().order_by('date', 'score1')"""
+
+
 class ScoreListView(LoginRequiredMixin, ListView):
     model = Score
-    template_name = 'Atletas/listar_scores2.html'
+    template_name = 'Atletas/listar_scores.html'
     login_url = 'login'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        today = date.today()
+        return queryset.filter(date=today).order_by('score1')
+
 
 class ScoreSearchView(LoginRequiredMixin, ListView):
     model = Score
-    template_name = 'Atletas/listar_scores2.html'
+    template_name = 'Atletas/listar_scores.html'
+    login_url = 'login'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -177,8 +193,19 @@ class ScoreSearchView(LoginRequiredMixin, ListView):
                 # Si la fecha ingresada no es válida, retornamos una lista vacía
                 return Score.objects.none()
             else:
-                queryset = queryset.filter(date=fecha)
+                queryset = queryset.filter(date=fecha).order_by('score1')
         return queryset
+class ScoreUpdateView(LoginRequiredMixin, UpdateView):
+    model = Score
+    form_class = ScoreForm
+    template_name = "Atletas/score.html"
+    success_url = reverse_lazy("listar_scores")
+
+
+class ScoreDeleteView(LoginRequiredMixin, DeleteView):
+    model = Score
+    template_name = "Atletas/borrar_score.html"
+    success_url = reverse_lazy("listar_scores")
 
 
 class PlanificacionesCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -196,6 +223,9 @@ class PlanificacionesListView(ListView):
     model = Planificaciones
     template_name = 'Atletas/listar_planis.html'
     login_url = 'login'
+
+    def get_queryset(self):
+        return super().get_queryset().order_by('fecha_inicio')
 
 
 class PlanificacionesUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):

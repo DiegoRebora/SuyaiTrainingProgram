@@ -1,0 +1,16 @@
+{% extends "Planificaciones/base.html" %}
+{% block contenido %}
+
+<h1 style="color:orange">Scores</h1>
+<form action="{% url 'buscar_score' %}" method="get">
+  {% csrf_token %}
+  <input type="text" name="q">
+  <input type="submit" value="Buscar por fecha // AAAA-MM-DD">
+</form>
+
+<br>
+<br>
+<br>
+<a href="{% url 'listar_scores' %}">Ver todos los scores</a>
+
+{% endblock contenido %}

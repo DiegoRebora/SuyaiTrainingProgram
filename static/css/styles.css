@@ -4049,6 +4049,7 @@ textarea.form-control-lg {
   font-size: 1.25rem;
   text-decoration: none;
   white-space: nowrap;
+  text-shadow: 3px 3px 8px grey;
 }
 .navbar-nav {
   display: flex;
@@ -11378,8 +11379,13 @@ footer.footer {
 
 .btn-secondary {
   background-color: #ff7c00;
+  box-shadow:3px 3px 8px grey;
 }
+
 .naranja-text {
-  color: #ff7c00
+  color: #ff7c00;
+  text-shadow: 3px 3px 8px grey;
 }
+
+.dropdown { margin-right: 0px;}
 

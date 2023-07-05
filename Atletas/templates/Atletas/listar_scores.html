@@ -19,17 +19,33 @@
               <th>Score3</th>
               <th>Sensaciones</th>
               <th>Fecha</th>
+              <th><th/>
+              <th><th/>
             </tr>
           </thead>
           <tbody>
             {% for score in object_list %}
             <tr>
-              <td style="color:white">{{ score.user.first_name }}</td>
+              <td style="color:white">{{ score.user.username }}</td>
               <td style="color:white">{{ score.score1 }}</td>
               <td style="color:white">{{ score.score2 }}</td>
               <td style="color:white">{{ score.score3 }}</td>
               <td style="color:white">{{ score.comment }}</td>
               <td style="color:white">{{ score.date }}</td>
+              <td>
+                {% if user == score.user %}
+                <a href="{% url 'editar_score' score.pk %}">
+                  <i class="bi bi-pencil"></i>
+                </a>
+              {% endif %}
+              </td>
+              <td>
+                {% if user == score.user %}
+                  <a href="{% url 'borrar_score' score.pk %}">
+                    <i class="bi bi-trash"></i>
+                  </a>
+                {% endif %}
+              </td>
             </tr>
             {% empty %}
             <tr>
@@ -50,8 +66,8 @@
       height: 100%;
     }
     .container {
-      padding-top: 50px;
-      padding-bottom: 50px;
+      padding-top: 0px;
+      padding-bottom: 0px;
       color: white;
     }
     .table {
